@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv/
+venv/
+ENV/
+
+# MLflow & Airflow
+mlruns/
+mlflow.db
+airflow/
+*.db
+*.sqlite
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs & Temporary Files
+logs/*.log
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Reports and temporary data backups (keep template / reference data)
+data/backup/*
+models/backup/*
+reports/backup/*
+!data/backup/.gitkeep
+!models/backup/.gitkeep
+!reports/backup/.gitkeep

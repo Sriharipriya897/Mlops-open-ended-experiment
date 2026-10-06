@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # 1. FastAPI Application & Model Serving
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: credit_risk_api
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=production
+      - PORT=8000
+      - HOST=0.0.0.0
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./reports:/app/reports
+      - ./logs:/app/logs
+      - ./config.yaml:/app/config.yaml
+    restart: unless-stopped
+    depends_on:
+      - mlflow
+
+  # 2. MLflow Experiment Tracking Server
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.10.0
+    container_name: credit_risk_mlflow
+    ports:
+      - "5000:5000"
+    command: mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root /mlflow/artifacts --host 0.0.0.0 --port 5000
+    volumes:
+      - mlflow_data:/mlflow
+    restart: unless-stopped
+
+  # 3. Prometheus Monitoring & Telemetry
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: credit_risk_prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    restart: unless-stopped
+    depends_on:
+      - api
+
+  # 4. Grafana Dashboards
+  grafana:
+    image: grafana/grafana:10.2.2
+    container_name: credit_risk_grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - grafana_data:/var/lib/grafana
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+
+volumes:
+  mlflow_data:
+  grafana_data:

@@ -1,0 +1,225 @@
+{
+  "timestamp": "2026-10-05T07:39:43.274036Z",
+  "dataset_drift_detected": true,
+  "drift_share": 0.2609,
+  "drift_threshold": 0.2,
+  "total_features_checked": 23,
+  "drifted_features_count": 6,
+  "drifted_features": [
+    "limit_bal",
+    "age",
+    "pay_0",
+    "pay_2",
+    "bill_amt1",
+    "bill_amt2"
+  ],
+  "feature_metrics": [
+    {
+      "feature": "limit_bal",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.6295,
+      "p_value": 0.0,
+      "drift_detected": true,
+      "ref_mean": 98525.0,
+      "curr_mean": 24525.0
+    },
+    {
+      "feature": "sex",
+      "metric_type": "PSI",
+      "metric_value": 0.001,
+      "p_value": null,
+      "drift_detected": false,
+      "ref_mean": 1.6,
+      "curr_mean": 1.61
+    },
+    {
+      "feature": "education",
+      "metric_type": "PSI",
+      "metric_value": 0.0011,
+      "p_value": null,
+      "drift_detected": false,
+      "ref_mean": 1.88,
+      "curr_mean": 1.86
+    },
+    {
+      "feature": "marriage",
+      "metric_type": "PSI",
+      "metric_value": 0.0,
+      "p_value": null,
+      "drift_detected": false,
+      "ref_mean": 1.59,
+      "curr_mean": 1.59
+    },
+    {
+      "feature": "age",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.8117,
+      "p_value": 0.0,
+      "drift_detected": true,
+      "ref_mean": 35.73,
+      "curr_mean": 60.73
+    },
+    {
+      "feature": "pay_0",
+      "metric_type": "PSI",
+      "metric_value": 9.4072,
+      "p_value": null,
+      "drift_detected": true,
+      "ref_mean": 0.03,
+      "curr_mean": 3.01
+    },
+    {
+      "feature": "pay_2",
+      "metric_type": "PSI",
+      "metric_value": 8.4398,
+      "p_value": null,
+      "drift_detected": true,
+      "ref_mean": -0.05,
+      "curr_mean": 3.04
+    },
+    {
+      "feature": "pay_3",
+      "metric_type": "PSI",
+      "metric_value": 0.0003,
+      "p_value": null,
+      "drift_detected": false,
+      "ref_mean": -0.1,
+      "curr_mean": -0.1
+    },
+    {
+      "feature": "pay_4",
+      "metric_type": "PSI",
+      "metric_value": 0.0012,
+      "p_value": null,
+      "drift_detected": false,
+      "ref_mean": -0.16,
+      "curr_mean": -0.17
+    },
+    {
+      "feature": "pay_5",
+      "metric_type": "PSI",
+      "metric_value": 0.0002,
+      "p_value": null,
+      "drift_detected": false,
+      "ref_mean": -0.18,
+      "curr_mean": -0.16
+    },
+    {
+      "feature": "pay_6",
+      "metric_type": "PSI",
+      "metric_value": 0.0002,
+      "p_value": null,
+      "drift_detected": false,
+      "ref_mean": -0.18,
+      "curr_mean": -0.19
+    },
+    {
+      "feature": "bill_amt1",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.3998,
+      "p_value": 0.0,
+      "drift_detected": true,
+      "ref_mean": 49211.26,
+      "curr_mean": 173065.12
+    },
+    {
+      "feature": "bill_amt2",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.3702,
+      "p_value": 0.0,
+      "drift_detected": true,
+      "ref_mean": 46721.07,
+      "curr_mean": 150164.31
+    },
+    {
+      "feature": "bill_amt3",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.0197,
+      "p_value": 0.67331,
+      "drift_detected": false,
+      "ref_mean": 44383.65,
+      "curr_mean": 44362.49
+    },
+    {
+      "feature": "bill_amt4",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.0202,
+      "p_value": 0.64252,
+      "drift_detected": false,
+      "ref_mean": 42229.41,
+      "curr_mean": 42063.27
+    },
+    {
+      "feature": "bill_amt5",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.0272,
+      "p_value": 0.27375,
+      "drift_detected": false,
+      "ref_mean": 40090.5,
+      "curr_mean": 40155.5
+    },
+    {
+      "feature": "bill_amt6",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.024,
+      "p_value": 0.42405,
+      "drift_detected": false,
+      "ref_mean": 38201.72,
+      "curr_mean": 38309.78
+    },
+    {
+      "feature": "pay_amt1",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.0245,
+      "p_value": 0.39815,
+      "drift_detected": false,
+      "ref_mean": 10973.31,
+      "curr_mean": 11353.23
+    },
+    {
+      "feature": "pay_amt2",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.0172,
+      "p_value": 0.82028,
+      "drift_detected": false,
+      "ref_mean": 10517.0,
+      "curr_mean": 10879.13
+    },
+    {
+      "feature": "pay_amt3",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.0277,
+      "p_value": 0.25449,
+      "drift_detected": false,
+      "ref_mean": 9999.23,
+      "curr_mean": 10042.91
+    },
+    {
+      "feature": "pay_amt4",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.029,
+      "p_value": 0.21076,
+      "drift_detected": false,
+      "ref_mean": 9359.11,
+      "curr_mean": 9393.93
+    },
+    {
+      "feature": "pay_amt5",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.0267,
+      "p_value": 0.29404,
+      "drift_detected": false,
+      "ref_mean": 9064.01,
+      "curr_mean": 8934.87
+    },
+    {
+      "feature": "pay_amt6",
+      "metric_type": "KS-statistic",
+      "metric_value": 0.0238,
+      "p_value": 0.43736,
+      "drift_detected": false,
+      "ref_mean": 8376.52,
+      "curr_mean": 8509.3
+    }
+  ]
+}

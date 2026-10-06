@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Credit Risk MLOps - Data Drift Report</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 24px; }
+        .container { max-width: 1100px; margin: 0 auto; background: #1e293b; padding: 32px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 20px; }
+        .badge-status { background: #ef4444; color: white; padding: 8px 16px; border-radius: 8px; font-weight: 700; letter-spacing: 0.5px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0; }
+        .card { background: #0f172a; padding: 18px; border-radius: 8px; border: 1px solid #334155; }
+        .card-title { font-size: 13px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+        .card-value { font-size: 24px; font-weight: 700; margin-top: 6px; color: #38bdf8; }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; background: #0f172a; border-radius: 8px; overflow: hidden; }
+        th { background: #334155; padding: 12px; text-align: left; font-size: 13px; color: #cbd5e1; text-transform: uppercase; }
+        td { color: #e2e8f0; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1 style="margin: 0; font-size: 24px;">Evidently & Statistical Data Drift Report</h1>
+                <p style="margin: 4px 0 0 0; color: #94a3b8; font-size: 14px;">Timestamp: 2026-10-05T07:39:43.274036Z | Reference vs Production Ingest</p>
+            </div>
+            <div class="badge-status">DRIFT DETECTED - RETRAINING RECOMMENDED</div>
+        </div>
+
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-title">Drift Share</div>
+                <div class="card-value">26.1%</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Drift Threshold</div>
+                <div class="card-value">20.0%</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Drifted Features</div>
+                <div class="card-value" style="color: #ef4444;">6 / 23</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Automated Action</div>
+                <div class="card-value" style="font-size: 18px; color: #a855f7;">Retrain Triggered</div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 18px; margin-top: 32px; color: #e2e8f0;">Feature Distribution Analysis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Test Method</th>
+                    <th>Score / Stat</th>
+                    <th>p-value</th>
+                    <th>Ref Mean</th>
+                    <th>Curr Mean</th>
+                    <th style="text-align: center;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">limit_bal</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.6295</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">98525.0</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">24525.0</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 4px; font-weight: bold;">DRIFT</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">sex</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">PSI</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.001</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">N/A</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">1.6</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">1.61</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">education</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">PSI</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0011</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">N/A</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">1.88</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">1.86</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">marriage</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">PSI</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">N/A</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">1.59</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">1.59</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">age</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.8117</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">35.73</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">60.73</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 4px; font-weight: bold;">DRIFT</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">pay_0</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">PSI</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">9.4072</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">N/A</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.03</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">3.01</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 4px; font-weight: bold;">DRIFT</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">pay_2</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">PSI</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">8.4398</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">N/A</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">-0.05</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">3.04</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 4px; font-weight: bold;">DRIFT</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">pay_3</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">PSI</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0003</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">N/A</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">-0.1</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">-0.1</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">pay_4</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">PSI</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0012</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">N/A</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">-0.16</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">-0.17</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">pay_5</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">PSI</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0002</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">N/A</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">-0.18</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">-0.16</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">pay_6</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">PSI</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0002</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">N/A</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">-0.18</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">-0.19</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">bill_amt1</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.3998</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">49211.26</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">173065.12</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 4px; font-weight: bold;">DRIFT</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">bill_amt2</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.3702</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">46721.07</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">150164.31</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 4px; font-weight: bold;">DRIFT</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">bill_amt3</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0197</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.67331</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">44383.65</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">44362.49</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">bill_amt4</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0202</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.64252</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">42229.41</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">42063.27</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">bill_amt5</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0272</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.27375</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">40090.5</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">40155.5</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">bill_amt6</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.024</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.42405</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">38201.72</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">38309.78</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">pay_amt1</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0245</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.39815</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">10973.31</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">11353.23</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">pay_amt2</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0172</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.82028</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">10517.0</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">10879.13</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">pay_amt3</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0277</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.25449</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">9999.23</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">10042.91</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">pay_amt4</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.029</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.21076</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">9359.11</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">9393.93</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">pay_amt5</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0267</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.29404</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">9064.01</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">8934.87</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+        <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: 500;">pay_amt6</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">KS-statistic</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.0238</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">0.43736</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">8376.52</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">8509.3</td>
+            <td style="padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center;"><span style="background: #d1fae5; color: #065f46; padding: 3px 8px; border-radius: 4px;">STABLE</span></td>
+        </tr>
+        
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

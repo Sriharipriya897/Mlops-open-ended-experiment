@@ -1,0 +1,52 @@
+groups:
+  - name: credit_risk_mlops_alerts
+    rules:
+      - alert: ModelServiceUnavailable
+        expr: up{job="credit-risk-api"} == 0
+        for: 10s
+        labels:
+          severity: critical
+          team: mlops
+        annotations:
+          summary: "Credit Risk API / Model service is down"
+          description: "Inference endpoint is unreachable. Automated failover recommended."
+
+      - alert: HighPredictionErrorRate
+        expr: (rate(prediction_errors_total[1m]) / rate(prediction_requests_total[1m])) > 0.05
+        for: 30s
+        labels:
+          severity: critical
+          team: mlops
+        annotations:
+          summary: "High prediction error rate (> 5%)"
+          description: "Model serving is throwing abnormal error rates. Check logs/failures.log."
+
+      - alert: HighInferenceLatency
+        expr: histogram_quantile(0.95, sum(rate(prediction_latency_seconds_bucket[1m])) by (le)) > 1.0
+        for: 30s
+        labels:
+          severity: warning
+          team: mlops
+        annotations:
+          summary: "Inference Latency P95 > 1000ms"
+          description: "Credit risk model inference latency exceeds acceptable production SLA."
+
+      - alert: DataDriftDetected
+        expr: data_drift_detected == 1
+        for: 10s
+        labels:
+          severity: high
+          team: mlops
+        annotations:
+          summary: "Significant Production Data Drift Detected"
+          description: "Feature distribution drift exceeds threshold. Airflow retraining pipeline should be triggered."
+
+      - alert: ModelLoadFailures
+        expr: rate(model_load_failures_total[1m]) > 0
+        for: 10s
+        labels:
+          severity: critical
+          team: mlops
+        annotations:
+          summary: "Model loading failures detected"
+          description: "Champion model artifact corrupted or missing. Initiate rollback immediately."

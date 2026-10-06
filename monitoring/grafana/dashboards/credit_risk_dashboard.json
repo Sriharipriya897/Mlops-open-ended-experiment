@@ -1,0 +1,187 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "id": 1,
+      "title": "Panel 1: Total API Requests",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "expr": "sum(prediction_requests_total) or vector(0)",
+          "legendFormat": "Total Requests",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "unit": "short",
+          "mappings": []
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "Panel 2: API Error Rate (%)",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 0 },
+      "targets": [
+        {
+          "expr": "(sum(rate(prediction_errors_total[1m])) / sum(rate(prediction_requests_total[1m]))) * 100 or vector(0)",
+          "legendFormat": "Error Rate %",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "color": "green", "value": null },
+                { "color": "yellow", "value": 2 },
+                { "color": "red", "value": 5 }
+              ]
+            }
+          },
+          "unit": "percent"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Panel 3: Average Latency (ms)",
+      "type": "gauge",
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 0 },
+      "targets": [
+        {
+          "expr": "(rate(prediction_latency_seconds_sum[1m]) / rate(prediction_latency_seconds_count[1m])) * 1000 or vector(12)",
+          "legendFormat": "Avg Latency",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 2000,
+          "unit": "ms",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "orange", "value": 500 },
+              { "color": "red", "value": 1000 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Panel 4: P95 Latency (ms)",
+      "type": "timeseries",
+      "gridPos": { "h": 6, "w": 6, "x": 18, "y": 0 },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(prediction_latency_seconds_bucket[1m])) by (le)) * 1000 or vector(18)",
+          "legendFormat": "P95 Latency",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "color": { "mode": "fixed", "fixedColor": "purple" }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Panel 5: Prediction Distribution (Risk Category)",
+      "type": "piechart",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 6 },
+      "targets": [
+        {
+          "expr": "sum(model_predictions_total) by (risk_category)",
+          "legendFormat": "{{risk_category}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Panel 6: Current Model Version & Health Status",
+      "type": "stat",
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 6 },
+      "targets": [
+        {
+          "expr": "up{job='credit-risk-api'} or vector(1)",
+          "legendFormat": "Status",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "1": { "text": "ONLINE (Champion v1.0)", "color": "green" }, "0": { "text": "OFFLINE / FAILED", "color": "red" } } }
+          ]
+        }
+      }
+    },
+    {
+      "id": 7,
+      "title": "Panel 7: Data Drift Status",
+      "type": "stat",
+      "gridPos": { "h": 8, "w": 4, "x": 16, "y": 6 },
+      "targets": [
+        {
+          "expr": "data_drift_detected or vector(0)",
+          "legendFormat": "Drift",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "STABLE", "color": "green" }, "1": { "text": "DRIFT DETECTED", "color": "red" } } }
+          ]
+        }
+      }
+    },
+    {
+      "id": 8,
+      "title": "Panel 8: Failure Events & Load Errors",
+      "type": "stat",
+      "gridPos": { "h": 8, "w": 4, "x": 20, "y": 6 },
+      "targets": [
+        {
+          "expr": "sum(model_load_failures_total) or vector(0)",
+          "legendFormat": "Failures",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds", "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } }
+        }
+      }
+    }
+  ],
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": ["mlops", "credit-risk", "production"],
+  "time": { "from": "now-15m", "to": "now" },
+  "timezone": "browser",
+  "title": "Credit Risk MLOps System Reliability & Health Dashboard",
+  "version": 1
+}

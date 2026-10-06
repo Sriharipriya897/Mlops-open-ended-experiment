@@ -1,0 +1,81 @@
+data_validation:
+  allowed_target_values:
+  - 0
+  - 1
+  max_missing_fraction: 0.1
+  min_rows: 500
+  required_columns:
+  - limit_bal
+  - sex
+  - education
+  - marriage
+  - age
+  - pay_0
+  - pay_2
+  - pay_3
+  - pay_4
+  - pay_5
+  - pay_6
+  - bill_amt1
+  - bill_amt2
+  - bill_amt3
+  - bill_amt4
+  - bill_amt5
+  - bill_amt6
+  - pay_amt1
+  - pay_amt2
+  - pay_amt3
+  - pay_amt4
+  - pay_amt5
+  - pay_amt6
+  target_column: default
+failure_simulation:
+  api_failure: false
+  bad_model: false
+  data_drift: false
+  high_latency: false
+  latency_delay_seconds: 0.0
+mlflow:
+  experiment_name: credit-risk-production
+  model_registry_name: CreditRiskPredictionModel
+  tracking_uri: sqlite:///mlflow.db
+model:
+  max_latency_ms: 1000
+  minimum_accuracy: 0.6
+  minimum_f1: 0.4
+  minimum_recall: 0.4
+  minimum_roc_auc: 0.6
+  target: default
+  test_size: 0.2
+monitoring:
+  drift_p_value_threshold: 0.05
+  drift_threshold: 0.2
+  max_error_rate: 0.05
+  max_latency_ms: 1000
+  metrics_port: 8000
+paths:
+  backup_data_dir: data/backup
+  backup_model_dir: models/backup
+  backup_reports_dir: reports/backup
+  challenger_model_dir: models/challenger
+  champion_model_dir: models/champion
+  drift_metrics_json: reports/drift_metrics.json
+  drift_report_html: reports/drift_report.html
+  logs_dir: logs
+  metrics_report: reports/metrics.json
+  model_comparison_csv: reports/model_comparison.csv
+  processed_data: data/processed/credit_default_clean.csv
+  raw_data: data/raw/credit_default.csv
+  reference_data: data/reference/reference.csv
+project:
+  description: Reliable Credit Risk Prediction with Automated Failure Detection, Rollback
+    and Recovery
+  name: reliable-credit-risk-mlops
+  random_seed: 42
+  version: 1.0.0
+recovery:
+  auto_rollback_on_failure: true
+  backup_model_count: 5
+  enable_rollback: true
+  rpo_minutes: 60
+  rto_minutes: 15
